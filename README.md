@@ -22,9 +22,9 @@ docker-compose -p grafana-issues exec sqlserver /opt/mssql-tools/bin/sqlcmd -S l
 
 After stack up, import dashboard into Grafana from file: ./Grafana-Issues-Samples/grafana-settings/dash.cities.json
 
-## Monitoring SQL Server quiries
+## Monitoring SQL Server queries
 
-This commando retrive sql server plan caches. Ideal is just one cache to your query.
+This commando retrive sql server plan caches. Ideal is just one cache for each command text structue query, on changing param value  must continue executing same plan cached.
 
 ```sql
 exec sp_BlitzCache @QueryFilter = 'statement', @Top = 50;
