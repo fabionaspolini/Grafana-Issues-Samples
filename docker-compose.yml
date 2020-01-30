@@ -11,21 +11,49 @@ services:
     networks: 
       - grafana-issues
 
+  grafana-beta:
+    image: grafana/grafana:6.5.0-beta1
+    # restart: always
+    volumes:
+      - grafana-beta-data:/var/lib/grafana      
+    ports:
+      - 8001:3000
+    networks: 
+      - grafana-issues
+
   pg:
     image: postgres:11.6
     # restart: always
     volumes: 
       - pg-data:/var/lib/postgresql/data
+      - ./db-factory:/scripts:ro
     environment: 
-      POSTGRES_PASSWORD: 123456
+      POSTGRES_PASSWORD: grafana.123
     ports: 
-      - 8001:5432
+      - 8002:5432
     networks:
-      - grafana-issues      
+      - grafana-issues     
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    # restart: always
+    volumes: 
+      - sqlserver-data:/var/opt/mssql
+      - ./db-factory:/scripts:ro
+    environment: 
+      ACCEPT_EULA: Y
+      MSSQL_PID: Express
+      SA_PASSWORD: grafana.123
+    ports: 
+      - 8003:1433
+    networks:
+      - grafana-issues
 
 volumes:
   grafana-data:
+  grafana-beta-data:
   pg-data:
+  sqlserver-data:
 
 networks:
   grafana-issues:

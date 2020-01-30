@@ -1,13 +1,18 @@
--- drop database if exists sample;
--- create database sample;
+create database sample
+go
+
+use sample
+go
 
 drop table if exists city;
 drop table if exists state;
 drop table if exists country;
+go
 
 create table country(id char(2) primary key , name varchar(40));
 create table state(countryId char(2) references Country(id), id char(2), name varchar(40), primary key (countryId, id));
-create table city(id serial primary key, countryId char(2), stateId char(2), name varchar(60), foundation_date date, foreign key (countryId, stateId) references state(countryId, id));
+create table city(id int identity primary key, countryId char(2), stateId char(2), name varchar(60), foundation_date date, foreign key (countryId, stateId) references state(countryId, id));
+go
 
 insert into country
 values ('US', 'United States of America'),
@@ -40,3 +45,4 @@ values ('US', 'AL', 'Alpine', '2019-12-01'),
        ('BR', 'SC', 'Criciúma', '2019-10-01'),
        ('BR', 'SC', 'Florianópolis', '2019-10-01'),
        ('BR', 'SC', 'Blumenau', '2019-10-01');
+go
