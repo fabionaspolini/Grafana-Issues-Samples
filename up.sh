@@ -1,0 +1,1 @@
+docker-compose -p grafana-issues up -d

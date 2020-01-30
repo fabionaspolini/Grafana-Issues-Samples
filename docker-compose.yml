@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+  grafana:
+    image: grafana/grafana:5.4.3
+    # restart: always
+    volumes:
+      - grafana-data:/var/lib/grafana
+    ports:
+      - 8000:3000
+    networks: 
+      - grafana-issues
+
+  pg:
+    image: postgres:11.6
+    # restart: always
+    volumes: 
+      - pg-data:/var/lib/postgresql/data
+    environment: 
+      POSTGRES_PASSWORD: 123456
+    ports: 
+      - 8001:5432
+    networks:
+      - grafana-issues      
+
+volumes:
+  grafana-data:
+  pg-data:
+
+networks:
+  grafana-issues:
